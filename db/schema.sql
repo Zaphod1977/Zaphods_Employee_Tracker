@@ -9,10 +9,10 @@ CREATE TABLE employee (
   manager_id INTEGER
 );
 
-CREATE TABLE role (
+CREATE TABLE `role` (
   id INTEGER AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(30) NOT NULL,
-  salary Decimal NOT NULL,
+  salary Decimal(10,2) NOT NULL,
   department_id INTEGER NOT NULL
 );
 
