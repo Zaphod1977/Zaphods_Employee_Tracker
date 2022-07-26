@@ -3,5 +3,24 @@
     "console.table": "^0.10.0",
     "inquirer": "^8.2.4",
     "mysql2": "^2.3.3"
-  }
+  },
+  "name": "zaphods_employee_tracker",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zaphod1977/Zaphods_Employee_Tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zaphod1977/Zaphods_Employee_Tracker/issues"
+  },
+  "homepage": "https://github.com/Zaphod1977/Zaphods_Employee_Tracker#readme"
 }
