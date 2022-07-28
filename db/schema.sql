@@ -1,3 +1,4 @@
+-- Schema for database establishment --
 CREATE DATABASE company;
 USE company;
 

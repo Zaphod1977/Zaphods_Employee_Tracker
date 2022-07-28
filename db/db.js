@@ -1,5 +1,5 @@
+// Project dependancies and packages
 const mysql = require('mysql2');
-
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -7,6 +7,7 @@ const connection = mysql.createConnection({
     database: 'company'
 });
 
+// Various database query and data return functions for each of the questions.
 const db = {
     viewDept: function () {
         return connection.promise().query(
