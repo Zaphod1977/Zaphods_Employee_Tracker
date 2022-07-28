@@ -32,58 +32,12 @@ const db = {
         return connection.promise().query(
             'INSERT INTO `role` (title, salary, department_id) values ("' + roleName + '" ,  ' + salary + ' ,  ' + deptID + ' )'
         );
+    },
+    addEmployee: function(firstName, lastName, role_id, manager_id){
+        return connection.promise().query(
+            'INSERT INTO `employee` (first_name, last_name, role_id, manager_id) values ("' + firstName + '" ,  "' + lastName + '" ,  ' + role_id + ' ,  ' + manager_id + ' )'
+        );
     }
 }
 
 module.exports = db
-
-
-
-
-
-
-// const questions = [
-    //     {
-    //         type: 'list',
-    //         name: 'employeeName',
-    //         message: "What woud you like to do?"
-    //     },
-    //     {
-    //         type: 'list',
-    //         name: 'employeeTitle',
-    //         message: "What is the title of the employee?",
-    //         choices: [
-    //             'Manager',
-    //             'Engineer',
-    //             'Intern'
-    //         ]
-    //     },
-    //     {
-    //         type: 'input',
-    //         name: 'employeeId',
-    //         message: "What is the employee's id?"
-    //     },
-    //     {
-    //         type: 'input',
-    //         name: 'employeeEmail',
-    //         message: "What is the employee's email address?"
-    //     }];
-    
-    // const managerQuestion = {
-    //     type: 'input',
-    //     name: 'office',
-    //     message: "What is the manager's office number?"
-    // };
-    
-    
-    // const internQuestion = {
-    //     type: 'input',
-    //     name: 'school',
-    //     message: "What is the intern's school?"
-    // };
-    
-    // const engineerQuestion = {
-    //     type: 'input',
-    //     name: 'gUser',
-    //     message: "What is the engineer's github username?"
-    // };
