@@ -73,6 +73,23 @@ const newEmployeeQuestions = [
     }
 ]
 
+function updateRoleQuestion(employees, roles) {
+    return [
+        {
+            type: 'list',
+            name: 'employee',
+            message: 'Select an employee to update.',
+            choices: employees
+        },
+        {
+            type: 'list',
+            name: 'role',
+            message: 'Select a new roll for the employee.',
+            choices: roles
+        }
+    ]
+}
+
 
 function init() {
     let text = "/*\n" + ascii_text_generator("Zaphods Employee Tracker", "2") + "\n*/";
@@ -103,6 +120,31 @@ function addNewEmployee() {
     })
 }
 
+function updateEmployeeRole() {
+    db.viewEmployee().then(employeeData => {
+        var employeeNames = employeeData[0].map((employee) => {
+            return employee.first_name + ' ' + employee.last_name;
+        })
+        db.viewRole().then(roleData => {
+            var roleNames = roleData[0].map((role) => {
+                return role.title;
+            })
+            inquirer.prompt(updateRoleQuestion(employeeNames, roleNames)).then(answers => {
+                var employeeObj = employeeData[0].filter(emp => {
+                    return emp.first_name + ' ' + emp.last_name == answers.employee;
+                })
+                var roleObj = roleData[0].filter(role => {
+                    return role.title == answers.role;
+                })
+                db.updateEmployee(employeeObj[0].id, roleObj[0].id).then(() => {
+                    askChoice();
+                })
+            }) 
+        })
+    })
+}
+
+
 function askChoice() {
     inquirer.prompt(exitQuestion)
         .then((answers) => {
@@ -127,11 +169,14 @@ function askChoice() {
                 askNewRole();
             } else if (answers.chooseNext === 'add an employee') {
                 addNewEmployee();
+            } else if (answers.chooseNext === 'update an employee role') {
+                updateEmployeeRole();
+            } else if (answers.chooseNext === 'Exit') {
+                console.log("Don't Panic! You're all done.");
+                process.exit();
             }
         })
 }
-
-
 
 // // Function call to initialize app
 init();

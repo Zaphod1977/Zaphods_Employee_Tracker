@@ -37,6 +37,11 @@ const db = {
         return connection.promise().query(
             'INSERT INTO `employee` (first_name, last_name, role_id, manager_id) values ("' + firstName + '" ,  "' + lastName + '" ,  ' + role_id + ' ,  ' + manager_id + ' )'
         );
+    },
+    updateEmployee: function(employeeID, roleID) {
+        return connection.promise().query(
+            'UPDATE employee SET role_id = ' + roleID + ' WHERE id = ' + employeeID 
+        );
     }
 }
 
