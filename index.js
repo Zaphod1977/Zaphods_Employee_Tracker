@@ -5,71 +5,87 @@ const inquirer = require("inquirer");
 const cTable = require('console.table');
 
 
-db.viewEmployee().then(data =>{
-    console.log(data[0]);
+db.viewEmployee().then(data => {
+    // console.log(data[0]);
 });
 
 //// TODO: Create an array of questions for user input
-// const questions = [
-//     {
-//         type: 'input',
-//         name: 'employeeName',
-//         message: "What is the team employee's name?"
-//     },
-//     {
-//         type: 'list',
-//         name: 'employeeTitle',
-//         message: "What is the title of the employee?",
-//         choices: [
-//             'Manager',
-//             'Engineer',
-//             'Intern'
-//         ]
-//     },
-//     {
-//         type: 'input',
-//         name: 'employeeId',
-//         message: "What is the employee's id?"
-//     },
-//     {
-//         type: 'input',
-//         name: 'employeeEmail',
-//         message: "What is the employee's email address?"
-//     }];
+const exitQuestion = {
+    type: 'list',
+    name: 'chooseNext',
+    message: "What would you like to do?",
+    choices: [
+        'view all departments',
+        'view all roles',
+        'view all employees',
+        'add a department',
+        'add a new role',
+        'add an employee',
+        'update an employee role',
+        'Exit'
+    ]
+};
 
-// const managerQuestion = {
-//     type: 'input',
-//     name: 'office',
-//     message: "What is the manager's office number?"
-// };
+const departmentQuestion = {
+    type: 'input',
+    name: 'deptName',
+    message: 'What is the name of the new department?'
+}
 
-// const exitQuestion = {
-//     type: 'list',
-//     name: 'chooseNext',
-//     message: "What would you like to do next?",
-//     choices: [
-//         'Add Engineer',
-//         'Add Intern',
-//         'Exit'
-//     ]
-// };
+const newRoleQuestions = [
+    {
+        type: 'input',
+        name: 'roleName',
+        message: 'What is the name of the new role?'
+    },
+    {
+        type: 'input',
+        name: 'deptID',
+        message: 'What is the department id of the role?'
+    },
+    {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the yearly salary of this role?'
+    }
+]
 
-// const internQuestion = {
-//     type: 'input',
-//     name: 'school',
-//     message: "What is the intern's school?"
-// };
 
-// const engineerQuestion = {
-//     type: 'input',
-//     name: 'gUser',
-//     message: "What is the engineer's github username?"
-// };
+function init() {
+    askChoice()
+};
+function askNewDept() {
+    inquirer.prompt(departmentQuestion).then(answers => {
+        db.addDept(answers.deptName).then(data => {
+            askChoice();
+        })
+    })
+}
 
-// TODO: Create a function to initialize app
-// function init() {
-//     var managerQuestions = [...questions, managerQuestion, exitQuestion]
-//     inquirer.prompt(managerQuestions)
+
+function askChoice() {
+    inquirer.prompt(exitQuestion)
+        .then((answers) => {
+            if (answers.chooseNext === 'view all departments') {
+                db.viewDept().then(data => {
+                    console.table(data[0]);
+                    askChoice();
+                })
+            } else if (answers.chooseNext === 'view all roles') {
+                db.viewRole().then(data => {
+                    console.table(data[0]);
+                    askChoice();
+                })
+            } else if (answers.chooseNext === 'view all employees') {
+                db.viewEmployee().then(data => {
+                    console.table(data[0]);
+                    askChoice();
+                })
+            } else if (answers.chooseNext === 'add a department') {
+                askNewDept();
+            }
+        })
+}
 //         .then((answers) => {
 //             var manager = new Manager(answers.employeeName, answers.employeeTitle, answers.employeeId, answers.employeeEmail, answers.office);
 //             employees.push(manager)
@@ -160,4 +176,4 @@ db.viewEmployee().then(data =>{
 // };
 
 // // Function call to initialize app
-// init();
+init();
