@@ -62,6 +62,13 @@ function askNewDept() {
     })
 }
 
+function askNewRole() {
+    inquirer.prompt(newRoleQuestions).then(answers => {
+        db.addRole(answers.roleName, answers.deptID, answers.salary).then(data => {
+            askChoice();
+        })
+    })
+}
 
 function askChoice() {
     inquirer.prompt(exitQuestion)
@@ -83,9 +90,20 @@ function askChoice() {
                 })
             } else if (answers.chooseNext === 'add a department') {
                 askNewDept();
+            } else if (answers.chooseNext === 'add a new role') {
+                askNewRole();
             }
         })
 }
+
+
+
+
+
+
+
+
+
 //         .then((answers) => {
 //             var manager = new Manager(answers.employeeName, answers.employeeTitle, answers.employeeId, answers.employeeEmail, answers.office);
 //             employees.push(manager)
